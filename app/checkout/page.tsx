@@ -25,7 +25,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("card")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const shippingCost = subtotal >= 25000 ? 0 : 2500
+  const shippingCost = 2500
   const finalTotal = total + shippingCost
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -336,11 +336,7 @@ export default function CheckoutPage() {
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Livraison</span>
                       <span>
-                        {shippingCost === 0 ? (
-                          <span className="text-green-600">Gratuite</span>
-                        ) : (
-                          formatPrice(shippingCost)
-                        )}
+                        {formatPrice(shippingCost)}
                       </span>
                     </div>
                     <Separator />
@@ -368,9 +364,7 @@ export default function CheckoutPage() {
                     )}
                   </Button>
 
-                  <p className="text-xs text-center text-muted-foreground mt-4">
-                    Paiement 100% sécurisé
-                  </p>
+
                 </div>
               </div>
             </div>

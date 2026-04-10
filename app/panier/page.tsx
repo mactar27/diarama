@@ -239,29 +239,18 @@ export default function CartPage() {
                   )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Livraison</span>
-                    <span>
-                      {subtotal >= 25000 ? (
-                        <span className="text-green-600">Gratuite</span>
-                      ) : (
-                        formatPrice(2500)
-                      )}
-                    </span>
+                    <span>{formatPrice(2500)}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total</span>
                     <span className="text-primary">
-                      {formatPrice(total + (subtotal >= 25000 ? 0 : 2500))}
+                      {formatPrice(total + 2500)}
                     </span>
                   </div>
                 </div>
 
-                {subtotal < 25000 && (
-                  <p className="text-xs text-muted-foreground mt-4">
-                    Plus que {formatPrice(25000 - subtotal)} pour la livraison
-                    gratuite !
-                  </p>
-                )}
+
 
                 <Button className="w-full mt-6" size="lg" asChild>
                   <Link href="/checkout">

@@ -39,23 +39,7 @@ import {
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 
-const features = [
-  {
-    icon: Truck,
-    title: "Livraison gratuite",
-    description: "Dès 25 000 FCFA d'achat",
-  },
-  {
-    icon: Shield,
-    title: "Paiement sécurisé",
-    description: "Transactions protégées",
-  },
-  {
-    icon: RotateCcw,
-    title: "Retours gratuits",
-    description: "Sous 14 jours",
-  },
-]
+
 
 export default function ProductPage({
   params,
@@ -286,18 +270,7 @@ function ProductDetails({ product }: { product: Product }) {
                 </Button>
               </div>
 
-              {/* Features */}
-              <div className="grid grid-cols-3 gap-4 py-6 border-t border-b">
-                {features.map((feature, index) => (
-                  <div key={index} className="text-center">
-                    <feature.icon className="h-6 w-6 mx-auto mb-2 text-primary" />
-                    <p className="text-sm font-medium">{feature.title}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+
             </div>
           </div>
 
