@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Filter, SlidersHorizontal, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -49,7 +49,7 @@ const priceRanges = [
   { min: 9000, max: Infinity, label: "Plus de 9 000 FCFA" },
 ]
 
-export default function BoutiquePage() {
+function BoutiqueContent() {
   const searchParams = useSearchParams()
   const initialCategory = searchParams.get("category") || ""
   const initialSearch = searchParams.get("search") || ""
@@ -332,5 +332,13 @@ export default function BoutiquePage() {
 
       <Footer />
     </div>
+  )
+}
+
+export default function BoutiquePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement de la boutique...</div>}>
+      <BoutiqueContent />
+    </Suspense>
   )
 }
