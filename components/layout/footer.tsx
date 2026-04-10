@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
-import { Instagram, Facebook, Mail } from "lucide-react"
+import { Instagram, Facebook, Mail, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
@@ -127,7 +127,7 @@ export function Footer() {
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/1ArkWpozQ6/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -136,13 +136,22 @@ export function Footer() {
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="https://tiktok.com"
+                href="https://tiktok.com/@diarama.cosmetiques"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="TikTok"
               >
                 <TikTokIcon className="h-5 w-5" />
+              </a>
+              <a
+                href="https://wa.me/221772324038"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="h-5 w-5" />
               </a>
               <a
                 href="mailto:contact@diarama.com"
@@ -212,13 +221,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Dia&apos;Rama. Tous droits réservés.
             </p>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <span>Paiement sécurisé</span>
-              <span>•</span>
-              <span>Livraison rapide</span>
-              <span>•</span>
-              <span>Service client 24/7</span>
-            </div>
           </div>
         </div>
       </div>
