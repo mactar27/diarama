@@ -10,8 +10,13 @@ import { Separator } from "@/components/ui/separator"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useCart } from "@/lib/cart-context"
-import { formatPrice, promoCodes } from "@/lib/data"
+import { formatPrice } from "@/lib/data"
 import { toast } from "sonner"
+
+const promoCodes = [
+  { code: 'BIENVENUE20', discount: 20, minOrder: 10000, active: true },
+  { code: 'LUXE10', discount: 10, minOrder: 15000, active: true }
+]
 
 export default function CartPage() {
   const {

@@ -1,16 +1,16 @@
-"use client"
-
 import Link from "next/link"
 import { Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/product-card"
-import { products } from "@/lib/data"
+import { getProducts } from "@/lib/data"
 
-// Demo wishlist - in a real app this would come from user data
-const wishlistProductIds = ["p1", "p6", "p8"]
-const wishlistProducts = products.filter(p => wishlistProductIds.includes(p.id))
+export default async function WishlistPage() {
+  const allProducts = await getProducts()
+  
+  // Demo wishlist - in a real app this would come from user data
+  const wishlistProductIds = ["p1", "p6", "p8"]
+  const wishlistProducts = allProducts.filter(p => wishlistProductIds.includes(p.id))
 
-export default function WishlistPage() {
   if (wishlistProducts.length === 0) {
     return (
       <div className="bg-card rounded-lg border p-12 text-center">
