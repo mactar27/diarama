@@ -1,5 +1,6 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
+const bcrypt = require('bcryptjs');
 
 const categories = [
   { id: "1", name: "Parfums", slug: "parfums", description: "Fragrances exquises pour femme", image: "/images/categories/parfums.jpg", productCount: 2 },
@@ -25,9 +26,86 @@ async function seed() {
     database: process.env.DB_NAME || 'diarama_db',
   });
 
-  console.log('Connected to MySQL. Seeding data...');
+  console.log('Connected to MySQL. Setting up schema...');
 
   try {
+    // Create tables
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS admins (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password_hash VARCHAR(255) NOT NULL,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS categories (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        slug VARCHAR(100) NOT NULL UNIQUE,
+        description TEXT,
+        image VARCHAR(255),
+        productCount INT DEFAULT 0
+      )
+    `);
+
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS products (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(200) NOT NULL,
+        description TEXT,
+        price INT NOT NULL,
+        category VARCHAR(100),
+        categorySlug VARCHAR(100),
+        image VARCHAR(255),
+        images JSON,
+        stock INT DEFAULT 0,
+        rating DECIMAL(2, 1) DEFAULT 0.0,
+        reviews INT DEFAULT 0,
+        featured BOOLEAN DEFAULT FALSE,
+        new BOOLEAN DEFAULT FALSE,
+        bestseller BOOLEAN DEFAULT FALSE,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (categorySlug) REFERENCES categories(slug) ON DELETE SET NULL
+      )
+    `);
+
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS promo_codes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        code VARCHAR(50) NOT NULL UNIQUE,
+        discount INT NOT NULL,
+        type VARCHAR(20) DEFAULT 'percentage',
+        minOrder INT DEFAULT 0,
+        active BOOLEAN DEFAULT TRUE
+      )
+    `);
+
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS orders (
+        id VARCHAR(50) PRIMARY KEY,
+        customerEmail VARCHAR(255) NOT NULL,
+        customerName VARCHAR(255),
+        items JSON NOT NULL,
+        subtotal INT NOT NULL,
+        discount INT DEFAULT 0,
+        shipping INT DEFAULT 2500,
+        total INT NOT NULL,
+        status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    console.log('Schema created successfully.');
+    // Seed Admin
+    const adminPasswordHash = await bcrypt.hash('admin123', 10);
+    await connection.execute(
+      'INSERT IGNORE INTO admins (email, password_hash) VALUES (?, ?)',
+      ['admin@diarama.com', adminPasswordHash]
+    );
+    console.log('Admin user seeded.');
+
     // Seed Categories
     for (const cat of categories) {
       await connection.execute(
