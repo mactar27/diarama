@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server"
-import { logout } from "@/lib/auth"
+import { cookies } from "next/headers"
+
+export const runtime = "nodejs"
 
 export async function POST() {
-  await logout()
+  const cookieStore = await cookies()
+  cookieStore.set("session", "", { expires: new Date(0), httpOnly: true })
   return NextResponse.json({ success: true })
 }
