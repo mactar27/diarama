@@ -8,8 +8,8 @@ export const metadata = {
   description: "Découvrez les dernières nouveautés de notre collection de cosmétiques haut de gamme.",
 }
 
-export default function NouveautesPage() {
-  const newProducts = getNewProducts()
+export default async function NouveautesPage() {
+  const newProducts = await getNewProducts()
 
   return (
     <div className="min-h-screen flex flex-col">

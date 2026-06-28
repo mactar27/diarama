@@ -20,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useCart } from "@/lib/cart-context"
-import { categories } from "@/lib/data"
+import { Category } from "@/lib/data"
 
 const navLinks = [
   { href: "/", label: "Accueil" },
@@ -29,7 +29,7 @@ const navLinks = [
   { href: "/bestsellers", label: "Bestsellers" },
 ]
 
-export function Header() {
+export function Header({ categories = [] }: { categories?: Category[] }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const { itemCount } = useCart()

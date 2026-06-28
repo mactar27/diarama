@@ -30,7 +30,7 @@ import {
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { ProductCard } from "@/components/product-card"
-import { products, categories, formatPrice } from "@/lib/data"
+import { products as getProducts, categories as getCategories, formatPrice, Product, Category } from "@/lib/data"
 
 type SortOption = "newest" | "price-asc" | "price-desc" | "popular" | "rating"
 
@@ -49,7 +49,12 @@ const priceRanges = [
   { min: 9000, max: Infinity, label: "Plus de 9 000 FCFA" },
 ]
 
-function BoutiqueContent() {
+interface BoutiqueContentProps {
+  initialProducts: Product[];
+  initialCategories: Category[];
+}
+
+function BoutiqueContent({ initialProducts, initialCategories }: BoutiqueContentProps) {
   const searchParams = useSearchParams()
   const initialCategory = searchParams.get("category") || ""
   const initialSearch = searchParams.get("search") || ""
@@ -58,12 +63,12 @@ function BoutiqueContent() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     initialCategory ? [initialCategory] : []
   )
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 15000])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 25000])
   const [sortBy, setSortBy] = useState<SortOption>("newest")
   const [inStockOnly, setInStockOnly] = useState(false)
 
   const filteredProducts = useMemo(() => {
-    let filtered = [...products]
+    let filtered = [...initialProducts]
 
     // Search filter
     if (searchQuery) {
@@ -113,7 +118,7 @@ function BoutiqueContent() {
     }
 
     return filtered
-  }, [searchQuery, selectedCategories, priceRange, sortBy, inStockOnly])
+  }, [initialProducts, searchQuery, selectedCategories, priceRange, sortBy, inStockOnly])
 
   const toggleCategory = (slug: string) => {
     setSelectedCategories(prev =>
@@ -126,7 +131,7 @@ function BoutiqueContent() {
   const clearFilters = () => {
     setSearchQuery("")
     setSelectedCategories([])
-    setPriceRange([0, 15000])
+    setPriceRange([0, 25000])
     setInStockOnly(false)
   }
 
@@ -134,7 +139,7 @@ function BoutiqueContent() {
     searchQuery ||
     selectedCategories.length > 0 ||
     priceRange[0] > 0 ||
-    priceRange[1] < 15000 ||
+    priceRange[1] < 25000 ||
     inStockOnly
 
   const FilterContent = () => (
@@ -146,7 +151,7 @@ function BoutiqueContent() {
           <ChevronDown className="h-4 w-4" />
         </CollapsibleTrigger>
         <CollapsibleContent className="pt-4 space-y-3">
-          {categories.map(category => (
+          {initialCategories.map(category => (
             <div key={category.slug} className="flex items-center gap-2">
               <Checkbox
                 id={`cat-${category.slug}`}
@@ -178,7 +183,7 @@ function BoutiqueContent() {
             value={priceRange}
             onValueChange={value => setPriceRange(value as [number, number])}
             min={0}
-            max={15000}
+            max={25000}
             step={500}
             className="w-full"
           />
@@ -335,10 +340,15 @@ function BoutiqueContent() {
   )
 }
 
-export default function BoutiquePage() {
+import { getProducts as fetchProducts, getCategories as fetchCategories } from "@/lib/data"
+
+export default async function BoutiquePage() {
+  const initialProducts = await fetchProducts()
+  const initialCategories = await fetchCategories()
+
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement de la boutique...</div>}>
-      <BoutiqueContent />
+      <BoutiqueContent initialProducts={initialProducts} initialCategories={initialCategories} />
     </Suspense>
   )
 }

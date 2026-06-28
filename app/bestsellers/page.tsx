@@ -8,8 +8,8 @@ export const metadata = {
   description: "Découvrez nos produits les plus populaires, les favoris de nos clients.",
 }
 
-export default function BestsellersPage() {
-  const bestsellerProducts = getBestsellerProducts()
+export default async function BestsellersPage() {
+  const bestsellerProducts = await getBestsellerProducts()
 
   return (
     <div className="min-h-screen flex flex-col">

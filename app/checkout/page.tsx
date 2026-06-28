@@ -85,12 +85,12 @@ export default function CheckoutPage() {
                       </Field>
                     </div>
                     <Field>
-                      <FieldLabel htmlFor="email">Email</FieldLabel>
+                      <FieldLabel htmlFor="email">Email <span className="text-muted-foreground font-normal">(optionnel)</span></FieldLabel>
                       <Input
                         id="email"
                         name="email"
                         type="email"
-                        required
+                        placeholder="john.doe@example.com"
                       />
                     </Field>
                     <Field>

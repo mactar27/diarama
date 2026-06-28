@@ -7,10 +7,11 @@ import { Footer } from "@/components/layout/footer"
 import { ProductCard } from "@/components/product-card"
 import { categories, getFeaturedProducts, getNewProducts, getBestsellerProducts } from "@/lib/data"
 
-export default function HomePage() {
-  const featuredProducts = getFeaturedProducts()
-  const newProducts = getNewProducts()
-  const bestsellerProducts = getBestsellerProducts()
+export default async function HomePage() {
+  const featuredProducts = await getFeaturedProducts()
+  const newProducts = await getNewProducts()
+  const bestsellerProducts = await getBestsellerProducts()
+  const categoriesList = await getCategories()
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -70,7 +71,7 @@ export default function HomePage() {
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {categories.slice(0, 8).map((category) => (
+              {categoriesList.slice(0, 8).map((category) => (
                 <Link
                   key={category.id}
                   href={`/boutique?category=${category.slug}`}
