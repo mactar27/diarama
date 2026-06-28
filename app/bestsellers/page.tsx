@@ -3,6 +3,8 @@ import { Footer } from "@/components/layout/footer"
 import { ProductCard } from "@/components/product-card"
 import { getBestsellerProducts } from "@/lib/data"
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: "Bestsellers | Dia'Rama",
   description: "Découvrez nos produits les plus populaires, les favoris de nos clients.",

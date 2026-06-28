@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -40,8 +40,13 @@ export default function CheckoutPage() {
     router.push("/confirmation")
   }
 
+  useEffect(() => {
+    if (items.length === 0) {
+      router.push("/panier")
+    }
+  }, [items.length, router])
+
   if (items.length === 0) {
-    router.push("/panier")
     return null
   }
 

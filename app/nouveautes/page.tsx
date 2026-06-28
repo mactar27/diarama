@@ -3,6 +3,8 @@ import { Footer } from "@/components/layout/footer"
 import { ProductCard } from "@/components/product-card"
 import { getNewProducts } from "@/lib/data"
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: "Nouveautés | Dia'Rama",
   description: "Découvrez les dernières nouveautés de notre collection de cosmétiques haut de gamme.",

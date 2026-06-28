@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { ProductCard } from "@/components/product-card"
-import { categories, getFeaturedProducts, getNewProducts, getBestsellerProducts } from "@/lib/data"
+export const dynamic = "force-dynamic"
+import { getFeaturedProducts, getNewProducts, getBestsellerProducts, getCategories } from "@/lib/data"
 
 export default async function HomePage() {
   const featuredProducts = await getFeaturedProducts()
