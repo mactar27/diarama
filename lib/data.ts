@@ -134,6 +134,3 @@ export async function getPromoCodes(): Promise<PromoCode[]> {
   return rows as PromoCode[];
 }
 
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('fr-FR').format(price) + ' FCFA'
-}

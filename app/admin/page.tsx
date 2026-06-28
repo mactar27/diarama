@@ -1,5 +1,6 @@
+export const dynamic = "force-dynamic"
 import { getDashboardStats, getRecentOrders } from "@/lib/admin-data"
-import { formatPrice } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 import { Package, ShoppingCart, Users, Banknote, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"

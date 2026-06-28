@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic"
 import Link from "next/link"
 import { Package, ChevronRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { formatPrice } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 const orders = [
   {

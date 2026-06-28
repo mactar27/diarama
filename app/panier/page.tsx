@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useCart } from "@/lib/cart-context"
-import { formatPrice } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 import { toast } from "sonner"
 
 const promoCodes = [

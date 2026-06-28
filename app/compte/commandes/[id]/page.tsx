@@ -1,10 +1,11 @@
 import Link from "next/link"
+export const dynamic = "force-dynamic"
 import { notFound } from "next/navigation"
 import { ChevronLeft, Package, MapPin, CreditCard, CheckCircle2, Clock, Truck, XCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { formatPrice } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 // Mock data — à remplacer par une vraie requête DB
 const orders = [

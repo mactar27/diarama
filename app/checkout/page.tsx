@@ -16,7 +16,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useCart } from "@/lib/cart-context"
-import { formatPrice } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 import { toast } from "sonner"
 
 export default function CheckoutPage() {
