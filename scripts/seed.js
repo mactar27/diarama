@@ -19,14 +19,19 @@ const products = [
 ];
 
 async function seed() {
+  // Connect without specifying database first, to create it
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'diarama_db',
+    port: parseInt(process.env.DB_PORT || '3306'),
+    ssl: process.env.DB_SSL === 'true' ? { minVersion: 'TLSv1.2', rejectUnauthorized: true } : undefined,
   });
 
-  console.log('Connected to MySQL. Setting up schema...');
+  const dbName = process.env.DB_NAME || 'diarama_db';
+  await connection.execute(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
+  await connection.execute(`USE \`${dbName}\``);
+  console.log(`Connected and using database: ${dbName}`);
 
   try {
     // Create tables
