@@ -1,11 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { User, Package, Heart, LogOut, Settings } from "lucide-react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 
 const accountLinks = [
   {
@@ -36,6 +37,12 @@ export default function AccountLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    toast.success("Vous avez été déconnecté")
+    router.push("/")
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -69,7 +76,10 @@ export default function AccountLayout({
                     </Link>
                   )
                 })}
-                <button className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-muted w-full text-left text-muted-foreground">
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-muted w-full text-left text-muted-foreground hover:text-foreground"
+                >
                   <LogOut className="h-5 w-5" />
                   Déconnexion
                 </button>
