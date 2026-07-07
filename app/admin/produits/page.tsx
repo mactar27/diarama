@@ -1,9 +1,10 @@
 export const dynamic = "force-dynamic"
 import { getProducts } from "@/lib/data"
 import { formatPrice } from "@/lib/utils"
-import { Plus, Edit, Trash2 } from "lucide-react"
+import { Plus } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ProductActions } from "./product-actions"
 
 export default async function AdminProductsPage() {
   const products = await getProducts()
@@ -12,9 +13,11 @@ export default async function AdminProductsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Gestion des Produits</h1>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Ajouter un produit
+        <Button className="gap-2" asChild>
+          <Link href="/admin/produits/nouveau">
+            <Plus className="h-4 w-4" />
+            Ajouter un produit
+          </Link>
         </Button>
       </div>
 
@@ -57,14 +60,7 @@ export default async function AdminProductsPage() {
                     <td className="px-6 py-4 font-medium">{formatPrice(product.price)}</td>
                     <td className="px-6 py-4">{product.stock}</td>
                     <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-500 hover:text-blue-600">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                      <ProductActions productId={product.id} />
                     </td>
                   </tr>
                 ))

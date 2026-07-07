@@ -71,3 +71,66 @@ export async function getUniqueClients() {
     return [];
   }
 }
+
+export async function createProduct(product: Omit<Product, 'id'>) {
+  const id = 'p' + Date.now();
+  try {
+    await pool.execute(
+      'INSERT INTO products (id, name, description, price, category, categorySlug, image, images, stock, rating, reviews, featured, new, bestseller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        id,
+        product.name,
+        product.description,
+        product.price,
+        product.category,
+        product.categorySlug,
+        product.image,
+        JSON.stringify(product.images || []),
+        product.stock,
+        product.rating || 0,
+        product.reviews || 0,
+        product.featured ? 1 : 0,
+        product.new ? 1 : 0,
+        product.bestseller ? 1 : 0
+      ]
+    );
+    return id;
+  } catch (e) {
+    console.error('createProduct error:', e);
+    throw e;
+  }
+}
+
+export async function updateProduct(id: string, product: Partial<Product>) {
+  try {
+    const fields = Object.keys(product).filter(k => k !== 'id');
+    const values = fields.map(k => {
+      let val = (product as any)[k];
+      if (k === 'images') return JSON.stringify(val);
+      if (k === 'featured' || k === 'new' || k === 'bestseller') return val ? 1 : 0;
+      return val;
+    });
+    
+    if (fields.length === 0) return true;
+    
+    const setClause = fields.map(f => `\`${f}\` = ?`).join(', ');
+    values.push(id);
+    
+    await pool.execute(`UPDATE products SET ${setClause} WHERE id = ?`, values);
+    return true;
+  } catch (e) {
+    console.error('updateProduct error:', e);
+    throw e;
+  }
+}
+
+export async function deleteProduct(id: string) {
+  try {
+    await pool.execute('DELETE FROM products WHERE id = ?', [id]);
+    return true;
+  } catch (e) {
+    console.error('deleteProduct error:', e);
+    throw e;
+  }
+}
+
