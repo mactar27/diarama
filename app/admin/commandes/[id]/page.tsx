@@ -3,8 +3,7 @@ import { formatPrice } from "@/lib/utils"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ChevronLeft, Phone, MessageCircle } from "lucide-react"
-import { updateOrderStatusAction } from "../actions"
-import { Button } from "@/components/ui/button"
+import { StatusForm } from "./status-form"
 
 export default async function AdminOrderDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -12,14 +11,6 @@ export default async function AdminOrderDetailsPage({ params }: { params: Promis
 
   if (!order) {
     notFound()
-  }
-
-  async function updateStatus(formData: FormData) {
-    "use server"
-    const status = formData.get("status") as string
-    if (status && order) {
-      await updateOrderStatusAction(order.id, status)
-    }
   }
 
   const cleanPhone = (order.phone || "").replace(/\s+/g, '')
@@ -37,16 +28,7 @@ export default async function AdminOrderDetailsPage({ params }: { params: Promis
           </span>
         </div>
         
-        <form action={updateStatus} className="flex gap-2">
-          <select name="status" defaultValue={order.status} className="border rounded-md px-3 py-1 text-sm bg-background">
-            <option value="pending">En attente</option>
-            <option value="processing">En préparation</option>
-            <option value="shipped">Expédié</option>
-            <option value="delivered">Livré</option>
-            <option value="cancelled">Annulé</option>
-          </select>
-          <Button type="submit" size="sm">Mettre à jour</Button>
-        </form>
+        <StatusForm orderId={order.id} currentStatus={order.status} />
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
