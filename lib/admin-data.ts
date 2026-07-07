@@ -40,7 +40,7 @@ export async function getDashboardStats() {
 
 export async function getRecentOrders(limit: number = 5): Promise<Order[]> {
   try {
-    const [rows] = await pool.execute('SELECT * FROM orders ORDER BY createdAt DESC LIMIT ?', [limit]);
+    const [rows] = await pool.execute(`SELECT * FROM orders ORDER BY createdAt DESC LIMIT ${Number(limit)}`);
     return (rows as any[]).map(row => ({
       ...row,
       items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items
