@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Package, ShoppingCart, Users, LogOut } from "lucide-react"
+import { LayoutDashboard, Package, ShoppingCart, Users, LogOut, Store } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
 
@@ -67,6 +67,13 @@ export default function AdminLayout({
         </nav>
 
         <div className="p-4 border-t">
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mb-2"
+          >
+            <Store className="h-5 w-5" />
+            Aller à l'accueil
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
