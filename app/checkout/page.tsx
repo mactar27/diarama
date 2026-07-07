@@ -90,15 +90,6 @@ export default function CheckoutPage() {
                       </Field>
                     </div>
                     <Field>
-                      <FieldLabel htmlFor="email">Email <span className="text-muted-foreground font-normal">(optionnel)</span></FieldLabel>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="john.doe@example.com"
-                      />
-                    </Field>
-                    <Field>
                       <FieldLabel htmlFor="phone">Téléphone</FieldLabel>
                       <Input
                         id="phone"
@@ -118,43 +109,12 @@ export default function CheckoutPage() {
                   </h2>
                   <FieldGroup>
                     <Field>
-                      <FieldLabel htmlFor="address">Adresse</FieldLabel>
+                      <FieldLabel htmlFor="address">Adresse complète</FieldLabel>
                       <Input
                         id="address"
                         name="address"
-                        placeholder="Numéro et nom de rue"
+                        placeholder="Quartier, numéro et nom de rue..."
                         required
-                      />
-                    </Field>
-                    <Field>
-                      <FieldLabel htmlFor="address2">
-                        Complément d&apos;adresse (optionnel)
-                      </FieldLabel>
-                      <Input
-                        id="address2"
-                        name="address2"
-                        placeholder="Appartement, bâtiment, étage..."
-                      />
-                    </Field>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <Field>
-                        <FieldLabel htmlFor="city">Ville</FieldLabel>
-                        <Input id="city" name="city" required />
-                      </Field>
-                      <Field>
-                        <FieldLabel htmlFor="region">Région</FieldLabel>
-                        <Input id="region" name="region" required />
-                      </Field>
-                    </div>
-                    <Field>
-                      <FieldLabel htmlFor="notes">
-                        Instructions de livraison (optionnel)
-                      </FieldLabel>
-                      <Textarea
-                        id="notes"
-                        name="notes"
-                        placeholder="Instructions spéciales pour le livreur..."
-                        rows={3}
                       />
                     </Field>
                   </FieldGroup>
