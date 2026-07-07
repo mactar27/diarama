@@ -2,6 +2,7 @@ import { getAllOrders } from "@/lib/admin-data"
 import { formatPrice } from "@/lib/utils"
 import { Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
@@ -52,8 +53,10 @@ export default async function AdminCommandesPage() {
                     </td>
                     <td className="px-6 py-4 font-medium">{formatPrice(order.total)}</td>
                     <td className="px-6 py-4 text-right">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-500 hover:text-blue-600">
-                        <Eye className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-500 hover:text-blue-600" asChild>
+                        <Link href={`/admin/commandes/${order.id}`}>
+                          <Eye className="h-4 w-4" />
+                        </Link>
                       </Button>
                     </td>
                   </tr>

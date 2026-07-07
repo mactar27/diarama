@@ -5,6 +5,8 @@ export interface Order {
   id: string;
   customerEmail: string;
   customerName: string;
+  phone?: string;
+  address?: string;
   items: any;
   subtotal: number;
   discount: number;
@@ -69,6 +71,21 @@ export async function getUniqueClients() {
   } catch (e) {
     console.error('getUniqueClients error:', e);
     return [];
+  }
+}
+
+export async function getOrderById(id: string): Promise<Order | null> {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM orders WHERE id = ?', [id]);
+    const row = (rows as any[])[0];
+    if (!row) return null;
+    return {
+      ...row,
+      items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items
+    };
+  } catch (e) {
+    console.error('getOrderById error:', e);
+    return null;
   }
 }
 
