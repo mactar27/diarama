@@ -17,6 +17,7 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [imageBase64, setImageBase64] = useState<string>(initialData?.image || "")
+  const [imagesBase64, setImagesBase64] = useState<string[]>(initialData?.images || [])
   const isEditing = !!initialData
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +29,20 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
       }
       reader.readAsDataURL(file)
     }
+  }
+
+  const handleMultipleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    files.forEach(file => {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagesBase64(prev => [...prev, reader.result as string])
+      }
+      reader.readAsDataURL(file)
+    })
+    
+    // Clear the input value so the same files can be selected again if needed
+    e.target.value = ''
   }
 
   const CATEGORIES = [
@@ -55,6 +70,7 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
       category: categoryStr,
       categorySlug: categorySlugStr,
       image: formData.get("image") as string,
+      images: imagesBase64,
       stock: Number(formData.get("stock")),
       featured: formData.get("featured") === "on",
       new: formData.get("new") === "on",
@@ -128,6 +144,37 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
             </div>
           )}
           <input type="hidden" name="image" value={imageBase64} />
+        </Field>
+
+        <Field className="md:col-span-2">
+          <FieldLabel htmlFor="secondaryImages">Images secondaires (Optionnel)</FieldLabel>
+          <Input 
+            id="secondaryImages" 
+            type="file" 
+            multiple
+            accept="image/*" 
+            onChange={handleMultipleImagesChange}
+          />
+          {imagesBase64.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm text-muted-foreground mb-2">Aperçus secondaires :</p>
+              <div className="flex gap-4 flex-wrap">
+                {imagesBase64.map((img, i) => (
+                  <div key={i} className="relative group">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={img} alt={`Aperçu secondaire ${i+1}`} className="h-24 w-auto rounded object-cover border" />
+                    <button 
+                      type="button" 
+                      onClick={() => setImagesBase64(prev => prev.filter((_, idx) => idx !== i))} 
+                      className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </Field>
 
         <Field className="md:col-span-2">
