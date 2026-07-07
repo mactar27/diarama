@@ -78,6 +78,12 @@ export default async function HomePage() {
                   href={`/boutique?category=${category.slug}`}
                   className="group relative aspect-square rounded-lg overflow-hidden bg-muted"
                 >
+                  <Image
+                    src={`/images/categories/${category.slug}.png`}
+                    alt={category.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent z-10" />
                   <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity z-10" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
