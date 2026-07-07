@@ -30,17 +30,30 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
     }
   }
 
+  const CATEGORIES = [
+    "Parfums",
+    "Déodorants",
+    "Laits Corporels",
+    "Crèmes Expert",
+    "Sérums",
+    "Soins Réparateurs",
+    "Huiles Corporelles"
+  ];
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
     const formData = new FormData(e.currentTarget)
     
+    const categoryStr = formData.get("category") as string
+    const categorySlugStr = categoryStr.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-')
+    
     const productData = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
       price: Number(formData.get("price")),
-      category: formData.get("category") as string,
-      categorySlug: formData.get("categorySlug") as string,
+      category: categoryStr,
+      categorySlug: categorySlugStr,
       image: formData.get("image") as string,
       stock: Number(formData.get("stock")),
       featured: formData.get("featured") === "on",
@@ -82,14 +95,19 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
           <Input id="price" name="price" type="number" defaultValue={initialData?.price} required />
         </Field>
 
-        <Field>
+        <Field className="md:col-span-2">
           <FieldLabel htmlFor="category">Catégorie</FieldLabel>
-          <Input id="category" name="category" defaultValue={initialData?.category} required />
-        </Field>
-
-        <Field>
-          <FieldLabel htmlFor="categorySlug">Slug de catégorie</FieldLabel>
-          <Input id="categorySlug" name="categorySlug" defaultValue={initialData?.categorySlug} required />
+          <select 
+            id="category" 
+            name="category" 
+            defaultValue={initialData?.category || CATEGORIES[0]} 
+            required
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {CATEGORIES.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
         </Field>
 
         <Field className="md:col-span-2">
