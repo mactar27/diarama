@@ -104,7 +104,7 @@ async function seed() {
 
     console.log('Schema created successfully.');
     // Seed Admin
-    const adminPasswordHash = await bcrypt.hash('admin123', 10);
+    const adminPasswordHash = await bcrypt.hash('D1ar@ma_2026_SecuR!ty', 10);
     await connection.execute(
       'INSERT IGNORE INTO admins (email, password_hash) VALUES (?, ?)',
       ['admin@diarama.com', adminPasswordHash]
