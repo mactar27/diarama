@@ -23,10 +23,9 @@ import { createOrderAction } from "./actions"
 export default function CheckoutPage() {
   const router = useRouter()
   const { items, subtotal, discount, total, clearCart } = useCart()
-  const [paymentMethod, setPaymentMethod] = useState("card")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const shippingCost = 2500
+  const shippingCost = 0
   const finalTotal = total + shippingCost
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -143,107 +142,17 @@ export default function CheckoutPage() {
                   <h2 className="font-semibold text-lg mb-6">
                     Mode de paiement
                   </h2>
-                  <RadioGroup
-                    value={paymentMethod}
-                    onValueChange={setPaymentMethod}
-                    className="space-y-4"
-                  >
-                    <div className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                      <RadioGroupItem value="card" id="card" />
-                      <Label
-                        htmlFor="card"
-                        className="flex items-center gap-3 cursor-pointer flex-1"
-                      >
-                        <CreditCard className="h-5 w-5 text-primary" />
-                        <div>
-                          <p className="font-medium">Carte bancaire</p>
-                          <p className="text-sm text-muted-foreground">
-                            Visa, Mastercard, etc.
-                          </p>
-                        </div>
-                      </Label>
+                  <div className="flex items-start gap-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                    <div className="bg-primary/10 p-2 rounded-full text-primary mt-1">
+                      <Banknote className="h-5 w-5" />
                     </div>
-                    <div className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                      <RadioGroupItem value="mobile" id="mobile" />
-                      <Label
-                        htmlFor="mobile"
-                        className="flex items-center gap-3 cursor-pointer flex-1"
-                      >
-                        <svg
-                          className="h-5 w-5 text-primary"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <rect x="5" y="2" width="14" height="20" rx="2" />
-                          <line x1="12" y1="18" x2="12" y2="18" />
-                        </svg>
-                        <div>
-                          <p className="font-medium">Mobile Money</p>
-                          <p className="text-sm text-muted-foreground">
-                            Orange Money, Wave, Free Money
-                          </p>
-                        </div>
-                      </Label>
+                    <div>
+                      <p className="font-medium text-lg">Paiement à la livraison</p>
+                      <p className="text-muted-foreground mt-1">
+                        Afin de vous faciliter la vie, le paiement s'effectuera uniquement en espèces au moment de la réception de votre commande.
+                      </p>
                     </div>
-                    <div className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                      <RadioGroupItem value="cash" id="cash" />
-                      <Label
-                        htmlFor="cash"
-                        className="flex items-center gap-3 cursor-pointer flex-1"
-                      >
-                        <Banknote className="h-5 w-5 text-primary" />
-                        <div>
-                          <p className="font-medium">Paiement à la livraison</p>
-                          <p className="text-sm text-muted-foreground">
-                            Payez en espèces à la réception
-                          </p>
-                        </div>
-                      </Label>
-                    </div>
-                  </RadioGroup>
-
-                  {paymentMethod === "card" && (
-                    <div className="mt-6 space-y-4">
-                      <Field>
-                        <FieldLabel htmlFor="cardNumber">
-                          Numéro de carte
-                        </FieldLabel>
-                        <Input
-                          id="cardNumber"
-                          placeholder="1234 5678 9012 3456"
-                          required
-                        />
-                      </Field>
-                      <div className="grid grid-cols-2 gap-4">
-                        <Field>
-                          <FieldLabel htmlFor="expiry">Expiration</FieldLabel>
-                          <Input id="expiry" placeholder="MM/AA" required />
-                        </Field>
-                        <Field>
-                          <FieldLabel htmlFor="cvv">CVV</FieldLabel>
-                          <Input id="cvv" placeholder="123" required />
-                        </Field>
-                      </div>
-                    </div>
-                  )}
-
-                  {paymentMethod === "mobile" && (
-                    <div className="mt-6">
-                      <Field>
-                        <FieldLabel htmlFor="mobileNumber">
-                          Numéro Mobile Money
-                        </FieldLabel>
-                        <Input
-                          id="mobileNumber"
-                          type="tel"
-                          placeholder="+221 XX XXX XX XX"
-                          required
-                        />
-                      </Field>
-                    </div>
-                  )}
+                  </div>
                 </section>
 
                 {/* Terms */}
@@ -318,8 +227,8 @@ export default function CheckoutPage() {
                     )}
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Livraison</span>
-                      <span>
-                        {formatPrice(shippingCost)}
+                      <span className="text-green-600 font-medium">
+                        Gratuite
                       </span>
                     </div>
                     <Separator />
