@@ -227,8 +227,8 @@ export default function CheckoutPage() {
                     )}
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Livraison</span>
-                      <span className="text-green-600 font-medium">
-                        Gratuite
+                      <span className="text-muted-foreground font-medium text-right">
+                        Calculée à la livraison
                       </span>
                     </div>
                     <Separator />
