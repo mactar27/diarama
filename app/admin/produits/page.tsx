@@ -48,7 +48,6 @@ export default async function AdminProductsPage() {
                             src={product.image}
                             alt={product.name}
                             className="h-full w-full object-cover"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none" }}
                           />
                         </div>
                         <span className="font-medium">{product.name}</span>
