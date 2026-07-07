@@ -6,12 +6,10 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { ProductCard } from "@/components/product-card"
 export const dynamic = "force-dynamic"
-import { getFeaturedProducts, getNewProducts, getBestsellerProducts, getCategories } from "@/lib/data"
+import { getFeaturedProducts, getCategories } from "@/lib/data"
 
 export default async function HomePage() {
   const featuredProducts = await getFeaturedProducts()
-  const newProducts = await getNewProducts()
-  const bestsellerProducts = await getBestsellerProducts()
   const categoriesList = await getCategories()
 
   return (
@@ -106,10 +104,10 @@ export default async function HomePage() {
             <div className="flex items-center justify-between mb-12">
               <div>
                 <h2 className="font-serif text-3xl md:text-4xl font-semibold mb-2">
-                  Produits Vedettes
+                  Notre Collection
                 </h2>
                 <p className="text-muted-foreground">
-                  Nos produits les plus appréciés par nos clients
+                  Découvrez tous nos produits phares
                 </p>
               </div>
               <Button variant="outline" asChild className="hidden sm:flex">
@@ -137,65 +135,6 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* New Products */}
-        {newProducts.length > 0 && (
-          <section className="py-16 md:py-24">
-            <div className="container mx-auto px-4">
-              <div className="flex items-center justify-between mb-12">
-                <div>
-                  <h2 className="font-serif text-3xl md:text-4xl font-semibold mb-2">
-                    Nouveautés
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Les dernières additions à notre collection
-                  </p>
-                </div>
-                <Button variant="outline" asChild className="hidden sm:flex">
-                  <Link href="/nouveautes">
-                    Voir tout
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {newProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Bestsellers */}
-        {bestsellerProducts.length > 0 && (
-          <section className="py-16 md:py-24 bg-cream">
-            <div className="container mx-auto px-4">
-              <div className="flex items-center justify-between mb-12">
-                <div>
-                  <h2 className="font-serif text-3xl md:text-4xl font-semibold mb-2">
-                    Bestsellers
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Les favoris de nos clients
-                  </p>
-                </div>
-                <Button variant="outline" asChild className="hidden sm:flex">
-                  <Link href="/bestsellers">
-                    Voir tout
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {bestsellerProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* About Section */}
         <section className="py-16 md:py-24">
