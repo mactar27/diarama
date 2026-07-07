@@ -36,6 +36,11 @@ export default function AboutPage() {
                 <h2 className="font-serif text-3xl font-semibold">
                   Notre Histoire
                 </h2>
+                <div className="bg-primary/5 border-l-4 border-primary p-4 my-4 rounded-r-lg">
+                  <p className="italic text-muted-foreground">
+                    <strong className="text-foreground">L'origine de Dia'Rama :</strong> Le nom de notre marque porte une histoire profondément personnelle et touchante. <strong>"Dia"</strong> vient du nom de mon père, et <strong>"Rama"</strong> du nom de ma mère. Une fois combinés dans notre langue, ces deux noms signifient <strong>"Merci"</strong>. Un hommage éternel à mes parents et une gratitude envers la beauté.
+                  </p>
+                </div>
                 <p className="text-muted-foreground leading-relaxed">
                   Dia'Rama est née d'une passion profonde pour la beauté africaine et d'un engagement inébranlable envers l'excellence. Depuis nos débuts, notre mission a toujours été claire : vous offrir des produits cosmétiques haut de gamme qui révèlent et subliment votre beauté naturelle.
                 </p>
