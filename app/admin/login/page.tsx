@@ -54,16 +54,7 @@ export default function AdminLoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Field>
-            <FieldLabel htmlFor="email">Adresse email</FieldLabel>
-            <Input 
-              id="email" 
-              name="email" 
-              type="email" 
-              placeholder="admin@diarama.com"
-              required 
-            />
-          </Field>
+          <input type="hidden" name="email" value="admin@diarama.com" />
           
           <Field>
             <FieldLabel htmlFor="password">Mot de passe</FieldLabel>

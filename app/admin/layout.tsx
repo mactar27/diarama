@@ -31,6 +31,10 @@ export default function AdminLayout({
     }
   }
 
+  if (pathname === "/admin/login") {
+    return <>{children}</>
+  }
+
   return (
     <div className="min-h-screen flex bg-muted/20">
       {/* Sidebar */}
