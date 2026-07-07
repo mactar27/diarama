@@ -175,13 +175,6 @@ export function Header({ categories = [] }: { categories?: Category[] }) {
               </Link>
             </Button>
 
-            {/* Account */}
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/compte">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Mon compte</span>
-              </Link>
-            </Button>
 
             {/* Cart */}
             <Button variant="ghost" size="icon" className="relative" asChild>
