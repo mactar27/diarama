@@ -16,7 +16,19 @@ import Link from "next/link"
 export function ProductForm({ initialData }: { initialData?: Product }) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [imageBase64, setImageBase64] = useState<string>(initialData?.image || "")
   const isEditing = !!initialData
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImageBase64(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -81,8 +93,23 @@ export function ProductForm({ initialData }: { initialData?: Product }) {
         </Field>
 
         <Field className="md:col-span-2">
-          <FieldLabel htmlFor="image">URL de l'image principale</FieldLabel>
-          <Input id="image" name="image" defaultValue={initialData?.image} placeholder="/images/products/..." required />
+          <FieldLabel htmlFor="imageFile">Image principale</FieldLabel>
+          <Input 
+            id="imageFile" 
+            name="imageFile" 
+            type="file" 
+            accept="image/*" 
+            onChange={handleImageChange}
+            required={!initialData?.image} 
+          />
+          {imageBase64 && (
+            <div className="mt-4">
+              <p className="text-sm text-muted-foreground mb-2">Aperçu :</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={imageBase64} alt="Aperçu" className="h-32 w-auto rounded object-cover border" />
+            </div>
+          )}
+          <input type="hidden" name="image" value={imageBase64} />
         </Field>
 
         <Field className="md:col-span-2">

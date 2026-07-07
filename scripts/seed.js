@@ -63,7 +63,7 @@ async function seed() {
         price INT NOT NULL,
         category VARCHAR(100),
         categorySlug VARCHAR(100),
-        image VARCHAR(255),
+        image LONGTEXT,
         images JSON,
         stock INT DEFAULT 0,
         rating DECIMAL(2, 1) DEFAULT 0.0,
