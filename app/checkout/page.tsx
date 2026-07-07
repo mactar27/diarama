@@ -18,6 +18,7 @@ import { Footer } from "@/components/layout/footer"
 import { useCart } from "@/lib/cart-context"
 import { formatPrice } from "@/lib/utils"
 import { toast } from "sonner"
+import { createOrderAction } from "./actions"
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -32,12 +33,29 @@ export default function CheckoutPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate order processing
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    const formData = new FormData(e.currentTarget)
+    const orderData = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      phone: formData.get("phone"),
+      address: formData.get("address"),
+      items,
+      subtotal,
+      discount,
+      shippingCost,
+      total: finalTotal
+    }
 
-    clearCart()
-    toast.success("Commande confirmée !")
-    router.push("/confirmation")
+    const res = await createOrderAction(orderData)
+
+    if (res.success) {
+      clearCart()
+      toast.success("Commande confirmée !")
+      router.push("/confirmation")
+    } else {
+      toast.error("Erreur lors de la création de la commande")
+      setIsSubmitting(false)
+    }
   }
 
   useEffect(() => {

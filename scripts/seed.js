@@ -90,8 +90,10 @@ async function seed() {
     await connection.execute(`
       CREATE TABLE IF NOT EXISTS orders (
         id VARCHAR(50) PRIMARY KEY,
-        customerEmail VARCHAR(255) NOT NULL,
+        customerEmail VARCHAR(255) NULL,
         customerName VARCHAR(255),
+        phone VARCHAR(50) NULL,
+        address TEXT NULL,
         items JSON NOT NULL,
         subtotal INT NOT NULL,
         discount INT DEFAULT 0,
