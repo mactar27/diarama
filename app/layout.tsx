@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import { CartProvider } from '@/lib/cart-context'
+import { AuthProvider } from '@/lib/auth-context'
 import './globals.css'
 
 const _inter = Inter({ subsets: ["latin"] });
@@ -32,10 +33,12 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="font-sans antialiased bg-background text-foreground">
-        <CartProvider>
-          {children}
-          <Toaster />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            {children}
+            <Toaster />
+          </CartProvider>
+        </AuthProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
