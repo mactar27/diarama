@@ -7,6 +7,9 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
+import { useAuth } from "@/lib/auth-context"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const accountLinks = [
   {
@@ -38,10 +41,58 @@ export default function AccountLayout({
 }) {
   const pathname = usePathname()
   const router = useRouter()
+  const { user, isLoading, login, logout } = useAuth()
 
   const handleLogout = () => {
+    logout()
     toast.success("Vous avez été déconnecté")
     router.push("/")
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 py-8 flex items-center justify-center">
+          <div className="animate-pulse text-muted-foreground">Chargement...</div>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 py-16 flex items-center justify-center bg-muted/30">
+          <div className="max-w-md w-full bg-card p-8 rounded-xl border shadow-sm">
+            <h1 className="font-serif text-3xl font-semibold mb-6 text-center">Connexion</h1>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              login({
+                name: (formData.get("email") as string).split("@")[0] || "Client",
+                email: formData.get("email") as string,
+                phone: "+221 77 000 00 00"
+              });
+              toast.success("Connexion réussie");
+            }} className="space-y-4">
+              <div>
+                <label className="text-sm font-medium mb-1 block">Email</label>
+                <Input required type="email" name="email" placeholder="votre@email.com" />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Mot de passe</label>
+                <Input required type="password" name="password" placeholder="••••••••" />
+              </div>
+              <Button type="submit" className="w-full">Se connecter</Button>
+            </form>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
   }
 
   return (

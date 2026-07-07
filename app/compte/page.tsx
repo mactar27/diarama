@@ -6,9 +6,18 @@ import { Input } from "@/components/ui/input"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { toast } from "sonner"
+import { useAuth } from "@/lib/auth-context"
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
+  const { user } = useAuth()
+
+  if (!user) return null
+
+  const nameParts = user.name.split(" ")
+  const firstName = nameParts[0] || ""
+  const lastName = nameParts.slice(1).join(" ") || ""
+  const initials = firstName.charAt(0) + (lastName.charAt(0) || "")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -23,14 +32,14 @@ export default function ProfilePage() {
         <div className="flex items-center gap-6">
           <Avatar className="h-20 w-20">
             <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
-              JD
+              {initials.toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="text-xl font-semibold">John Doe</h2>
-            <p className="text-muted-foreground">john.doe@example.com</p>
+            <h2 className="text-xl font-semibold">{user.name}</h2>
+            <p className="text-muted-foreground">{user.email}</p>
             <p className="text-sm text-muted-foreground mt-1">
-              Membre depuis janvier 2024
+              Membre depuis aujourd'hui
             </p>
           </div>
         </div>
@@ -54,7 +63,7 @@ export default function ProfilePage() {
                 <FieldLabel htmlFor="firstName">Prénom</FieldLabel>
                 <Input
                   id="firstName"
-                  defaultValue="John"
+                  defaultValue={firstName}
                   disabled={!isEditing}
                 />
               </Field>
@@ -62,7 +71,7 @@ export default function ProfilePage() {
                 <FieldLabel htmlFor="lastName">Nom</FieldLabel>
                 <Input
                   id="lastName"
-                  defaultValue="Doe"
+                  defaultValue={lastName}
                   disabled={!isEditing}
                 />
               </Field>
@@ -72,7 +81,7 @@ export default function ProfilePage() {
               <Input
                 id="email"
                 type="email"
-                defaultValue="john.doe@example.com"
+                defaultValue={user.email}
                 disabled={!isEditing}
               />
             </Field>
@@ -81,7 +90,7 @@ export default function ProfilePage() {
               <Input
                 id="phone"
                 type="tel"
-                defaultValue="+221 77 123 45 67"
+                defaultValue={user.phone || ""}
                 disabled={!isEditing}
               />
             </Field>
@@ -116,13 +125,13 @@ export default function ProfilePage() {
                 Par défaut
               </span>
             </div>
-            <p className="font-medium">John Doe</p>
+            <p className="font-medium">{user.name}</p>
             <p className="text-sm text-muted-foreground">
               123 Rue de la Paix
               <br />
               Dakar, Sénégal
               <br />
-              +221 77 123 45 67
+              {user.phone || "+221 77 000 00 00"}
             </p>
           </div>
         </div>
