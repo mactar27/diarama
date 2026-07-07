@@ -221,6 +221,17 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Dia&apos;Rama. Tous droits réservés.
             </p>
+            <p className="text-sm text-muted-foreground">
+              Réalisé par{" "}
+              <a
+                href="https://wockytech.xyz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors font-medium"
+              >
+                WockyTech
+              </a>
+            </p>
           </div>
         </div>
       </div>
