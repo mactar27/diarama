@@ -151,3 +151,12 @@ export async function deleteProduct(id: string) {
   }
 }
 
+export async function updateOrderStatus(id: string, status: string) {
+  try {
+    await pool.execute('UPDATE orders SET status = ? WHERE id = ?', [status, id]);
+    return true;
+  } catch (e) {
+    console.error('updateOrderStatus error:', e);
+    throw e;
+  }
+}

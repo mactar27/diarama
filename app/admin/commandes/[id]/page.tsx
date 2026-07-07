@@ -2,7 +2,9 @@ import { getOrderById } from "@/lib/admin-data"
 import { formatPrice } from "@/lib/utils"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Phone, MessageCircle } from "lucide-react"
+import { updateOrderStatusAction } from "../actions"
+import { Button } from "@/components/ui/button"
 
 export default async function AdminOrderDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -12,16 +14,39 @@ export default async function AdminOrderDetailsPage({ params }: { params: Promis
     notFound()
   }
 
+  async function updateStatus(formData: FormData) {
+    "use server"
+    const status = formData.get("status") as string
+    if (status && order) {
+      await updateOrderStatusAction(order.id, status)
+    }
+  }
+
+  const cleanPhone = (order.phone || "").replace(/\s+/g, '')
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href="/admin/commandes" className="text-muted-foreground hover:text-foreground">
-          <ChevronLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="text-2xl font-semibold">Commande #{order.id.slice(0, 8)}</h1>
-        <span className="capitalize px-3 py-1 rounded-full text-sm bg-primary/10 text-primary font-medium">
-          {order.status}
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link href="/admin/commandes" className="text-muted-foreground hover:text-foreground">
+            <ChevronLeft className="h-5 w-5" />
+          </Link>
+          <h1 className="text-2xl font-semibold">Commande #{order.id.slice(0, 8)}</h1>
+          <span className="capitalize px-3 py-1 rounded-full text-sm bg-primary/10 text-primary font-medium">
+            {order.status}
+          </span>
+        </div>
+        
+        <form action={updateStatus} className="flex gap-2">
+          <select name="status" defaultValue={order.status} className="border rounded-md px-3 py-1 text-sm bg-background">
+            <option value="pending">En attente</option>
+            <option value="processing">En préparation</option>
+            <option value="shipped">Expédié</option>
+            <option value="delivered">Livré</option>
+            <option value="cancelled">Annulé</option>
+          </select>
+          <Button type="submit" size="sm">Mettre à jour</Button>
+        </form>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
@@ -86,6 +111,17 @@ export default async function AdminOrderDetailsPage({ params }: { params: Promis
                 <p className="text-muted-foreground">Téléphone</p>
                 <p className="font-medium">{order.phone || order.customerEmail || "Non renseigné"}</p>
               </div>
+              
+              {cleanPhone && (
+                <div className="flex gap-3 pt-4 border-t">
+                  <a href={`https://wa.me/${cleanPhone.startsWith('221') ? cleanPhone : '221' + cleanPhone}`} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-2 rounded-md font-medium transition-colors">
+                    <MessageCircle className="h-4 w-4" /> WhatsApp
+                  </a>
+                  <a href={`tel:${cleanPhone}`} className="flex-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md font-medium transition-colors">
+                    <Phone className="h-4 w-4" /> Appeler
+                  </a>
+                </div>
+              )}
             </div>
           </div>
 
