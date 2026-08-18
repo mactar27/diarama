@@ -62,6 +62,23 @@ export default function AccountLayout({
   }
 
   if (!user) {
+    if (pathname === "/compte/wishlist") {
+      return (
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1 py-8">
+            <div className="container mx-auto px-4">
+              <h1 className="font-serif text-3xl md:text-4xl font-semibold mb-8">
+                Ma Liste de Souhaits
+              </h1>
+              {children}
+            </div>
+          </main>
+          <Footer />
+        </div>
+      )
+    }
+
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
