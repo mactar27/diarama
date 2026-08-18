@@ -3,6 +3,7 @@ import { formatPrice } from "@/lib/utils"
 import { Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { DeleteAllButton } from "./delete-all-button"
 
 export const dynamic = "force-dynamic"
 
@@ -13,6 +14,7 @@ export default async function AdminCommandesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Gestion des Commandes</h1>
+        {orders.length > 0 && <DeleteAllButton />}
       </div>
 
       <div className="bg-card rounded-xl border shadow-sm overflow-hidden">

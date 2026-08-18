@@ -160,3 +160,13 @@ export async function updateOrderStatus(id: string, status: string) {
     throw e;
   }
 }
+
+export async function deleteAllOrders() {
+  try {
+    await pool.execute('DELETE FROM orders');
+    return true;
+  } catch (e) {
+    console.error('deleteAllOrders error:', e);
+    throw e;
+  }
+}
