@@ -53,22 +53,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             )}
           </div>
 
-          {/* Quick actions */}
-          <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-            <Button
-              size="icon"
-              variant="secondary"
-              className="h-9 w-9 rounded-full shadow-lg"
-              onClick={e => {
-                e.preventDefault()
-                e.stopPropagation()
-                toast.success("Ajouté à la liste de souhaits")
-              }}
-            >
-              <Heart className="h-4 w-4" />
-              <span className="sr-only">Ajouter aux favoris</span>
-            </Button>
-          </div>
+
 
           {/* Add to cart overlay */}
           <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">

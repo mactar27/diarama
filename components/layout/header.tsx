@@ -167,13 +167,7 @@ export function Header({ categories = [] }: { categories?: Category[] }) {
               </Button>
             )}
 
-            {/* Wishlist */}
-            <Button variant="ghost" size="icon" asChild className="hidden sm:flex">
-              <Link href="/compte/wishlist">
-                <Heart className="h-5 w-5" />
-                <span className="sr-only">Liste de souhaits</span>
-              </Link>
-            </Button>
+
 
 
             {/* Cart */}

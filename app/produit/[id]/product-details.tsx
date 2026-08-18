@@ -6,7 +6,6 @@ import Link from "next/link"
 import {
   Minus,
   Plus,
-  Heart,
   ShoppingBag,
   Star,
 } from "lucide-react"
@@ -235,15 +234,7 @@ export function ProductDetails({ product, similarProducts }: ProductDetailsProps
                     Ajouter au panier
                   </Button>
                 </div>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full gap-2"
-                  onClick={() => toast.success("Ajouté à la liste de souhaits")}
-                >
-                  <Heart className="h-5 w-5" />
-                  Ajouter aux favoris
-                </Button>
+
               </div>
             </div>
           </div>

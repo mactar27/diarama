@@ -22,11 +22,7 @@ const accountLinks = [
     label: "Mes commandes",
     icon: Package,
   },
-  {
-    href: "/compte/wishlist",
-    label: "Ma liste de souhaits",
-    icon: Heart,
-  },
+
   {
     href: "/compte/parametres",
     label: "Paramètres",
