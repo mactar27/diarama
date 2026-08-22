@@ -38,7 +38,8 @@ export default function AdminLayout({
   return (
     <div className="flex min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 backdrop-blur-md flex flex-col hidden md:flex">
+      {sidebarOpen && <div className="fixed inset-0 z-40 bg-zinc-950/60 backdrop-blur-sm md:hidden transition-opacity duration-300" onClick={() => setSidebarOpen(false)} />}
+      <aside className={cn("fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 backdrop-blur-md transition-transform duration-300 md:static md:translate-x-0", sidebarOpen ? "translate-x-0" : "-translate-x-full")}>
         <div className="h-16 flex items-center gap-3 border-b border-zinc-150 dark:border-zinc-800/80 px-6">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.15)]">
             <Package className="h-5 w-5" />
@@ -56,6 +57,7 @@ export default function AdminLayout({
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setSidebarOpen(false)}
                 className={cn(
                   "flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-all duration-200 border border-transparent",
                   isActive 
