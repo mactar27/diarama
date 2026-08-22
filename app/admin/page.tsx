@@ -28,9 +28,10 @@ interface KpiProps {
   sub: string
   icon: React.ElementType
   color: "amber" | "blue" | "emerald" | "violet"
+  href?: string
 }
 
-function KpiCard({ label, value, sub, icon: Icon, color }: KpiProps) {
+function KpiCard({ label, value, sub, icon: Icon, color, href }: KpiProps) {
   const colorMap = {
     amber: { bg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20", glow: "shadow-[0_0_15px_rgba(245,158,11,0.08)]" },
     blue: { bg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20", glow: "shadow-[0_0_15px_rgba(59,130,246,0.08)]" },
@@ -39,8 +40,8 @@ function KpiCard({ label, value, sub, icon: Icon, color }: KpiProps) {
   }
   const theme = colorMap[color]
 
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 p-4.5 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_24px_rgba(245,158,11,0.05)] dark:hover:shadow-[0_8px_30px_rgba(245,158,11,0.05)] hover:border-amber-500/20 dark:hover:border-amber-500/30 transition-all duration-300 group hover:-translate-y-0.5">
+  const content = (
+    <>
       <div className="absolute -right-6 -top-6 h-16 w-16 rounded-full bg-gradient-to-br from-amber-500/5 to-transparent blur-md group-hover:scale-150 transition-transform duration-500" />
       <div className="flex items-center gap-3.5">
         <div className={cn("flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 group-hover:scale-105", theme.bg, theme.glow)}>
@@ -54,8 +55,20 @@ function KpiCard({ label, value, sub, icon: Icon, color }: KpiProps) {
       <div className="mt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 pt-2.5">
         <span className="text-[11px] font-medium text-zinc-450 dark:text-zinc-500 truncate">{sub}</span>
       </div>
-    </div>
+    </>
   )
+
+  const classes = "relative block overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 p-4.5 shadow-[0_2px_8px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_24px_rgba(245,158,11,0.05)] dark:hover:shadow-[0_8px_30px_rgba(245,158,11,0.05)] hover:border-amber-500/20 dark:hover:border-amber-500/30 transition-all duration-300 group hover:-translate-y-0.5"
+
+  if (href) {
+    return (
+      <Link href={href} className={classes}>
+        {content}
+      </Link>
+    )
+  }
+
+  return <div className={classes}>{content}</div>
 }
 
 export default async function AdminDashboard() {
@@ -72,9 +85,9 @@ export default async function AdminDashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard label="Chiffre d'affaires" value={formatPrice(stats.totalRevenue)} sub="Revenu cumulé" icon={Banknote} color="amber" />
-        <KpiCard label="Commandes" value={String(stats.totalOrders)} sub="Total des ventes" icon={ShoppingCart} color="blue" />
-        <KpiCard label="Produits" value={String(stats.totalProducts)} sub="Références catalogue" icon={Package} color="emerald" />
-        <KpiCard label="Clients" value={String(stats.totalClients)} sub="Comptes enregistrés" icon={Users} color="violet" />
+        <KpiCard label="Commandes" value={String(stats.totalOrders)} sub="Total des ventes" icon={ShoppingCart} color="blue" href="/admin/commandes" />
+        <KpiCard label="Produits" value={String(stats.totalProducts)} sub="Références catalogue" icon={Package} color="emerald" href="/admin/produits" />
+        <KpiCard label="Clients" value={String(stats.totalClients)} sub="Comptes enregistrés" icon={Users} color="violet" href="/admin/clients" />
       </div>
 
       {/* Recent Orders */}
