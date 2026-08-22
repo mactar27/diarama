@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { Lock } from "lucide-react"
+import { Lock, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field, FieldLabel } from "@/components/ui/field"
@@ -12,6 +12,7 @@ import { toast } from "sonner"
 export default function AdminLoginPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -62,14 +63,23 @@ export default function AdminLoginPage() {
           
           <div className="space-y-2">
             <FieldLabel htmlFor="password" className="text-xs text-zinc-300 tracking-wider uppercase font-bold">Mot de passe</FieldLabel>
-            <Input 
-              id="password" 
-              name="password" 
-              type="password" 
-              placeholder="••••••••"
-              required 
-              className="bg-black/40 border-zinc-800 focus:border-amber-500/50 focus:ring-amber-500/20 text-white rounded-xl placeholder:text-zinc-600 h-11"
-            />
+            <div className="relative">
+              <Input 
+                id="password" 
+                name="password" 
+                type={showPassword ? "text" : "password"} 
+                placeholder="••••••••"
+                required 
+                className="bg-black/40 border-zinc-800 focus:border-amber-500/50 focus:ring-amber-500/20 text-white rounded-xl placeholder:text-zinc-600 h-11 pr-10 w-full"
+              />
+              <button 
+                type="button" 
+                onClick={() => setShowPassword(!showPassword)} 
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
 
           <Button type="submit" className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-zinc-950 font-semibold tracking-wide rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.3)] transition-all duration-300 border-none h-11" disabled={isLoading}>
