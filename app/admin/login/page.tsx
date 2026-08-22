@@ -40,20 +40,16 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-zinc-950 via-black to-zinc-900 p-4 text-zinc-100">
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-amber-500/5 blur-[120px]" />
-        <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-amber-600/10 blur-[120px]" />
-      </div>
-      <div className="relative w-full max-w-md p-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] transition-all duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 p-4 text-zinc-800 dark:text-zinc-200">
+      <div className="relative w-full max-w-md p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300">
         <div className="flex flex-col items-center mb-8 text-center">
-          <div className="h-14 w-14 bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)] flex items-center justify-center rounded-2xl mb-4">
+          <div className="h-14 w-14 bg-amber-500/10 text-amber-600 border border-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.1)] flex items-center justify-center rounded-2xl mb-4">
             <Lock className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-bold tracking-wider text-amber-500" style={{ fontFamily: "var(--font-cormorant)" }}>
+          <h1 className="text-2xl font-bold tracking-wide text-zinc-850 dark:text-zinc-100" style={{ fontFamily: "var(--font-cormorant)" }}>
             Dia&apos;Rama Admin
           </h1>
-          <p className="mt-1 text-xs text-zinc-400 font-light tracking-wide">
+          <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500 font-light tracking-wide">
             Espace d&apos;administration sécurisé
           </p>
         </div>
@@ -62,7 +58,7 @@ export default function AdminLoginPage() {
           <input type="hidden" name="email" value="admin@diarama.com" />
           
           <div className="space-y-2">
-            <FieldLabel htmlFor="password" className="text-xs text-zinc-300 tracking-wider uppercase font-bold">Mot de passe</FieldLabel>
+            <FieldLabel htmlFor="password" className="text-xs text-zinc-500 dark:text-zinc-400 tracking-wider uppercase font-bold">Mot de passe</FieldLabel>
             <div className="relative">
               <Input 
                 id="password" 
@@ -70,19 +66,19 @@ export default function AdminLoginPage() {
                 type={showPassword ? "text" : "password"} 
                 placeholder="••••••••"
                 required 
-                className="bg-black/40 border-zinc-800 focus:border-amber-500/50 focus:ring-amber-500/20 text-white rounded-xl placeholder:text-zinc-600 h-11 pr-10 w-full"
+                className="bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 focus:border-amber-500/50 focus:ring-amber-500/10 text-zinc-800 dark:text-zinc-100 rounded-xl placeholder:text-zinc-300 dark:placeholder:text-zinc-700 h-11 pr-10 w-full"
               />
               <button 
                 type="button" 
                 onClick={() => setShowPassword(!showPassword)} 
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-650"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
 
-          <Button type="submit" className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-zinc-950 font-semibold tracking-wide rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.3)] transition-all duration-300 border-none h-11" disabled={isLoading}>
+          <Button type="submit" className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-zinc-950 font-bold tracking-wide rounded-xl shadow-[0_4px_15px_rgba(245,158,11,0.15)] border-none h-11" disabled={isLoading}>
             {isLoading ? "Connexion..." : "Se connecter"}
           </Button>
         </form>
