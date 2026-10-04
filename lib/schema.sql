@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS orders (
     items JSON NOT NULL,
     subtotal INT NOT NULL,
     discount INT DEFAULT 0,
-    shipping INT DEFAULT 2500,
+    shipping INT DEFAULT 2000,
     total INT NOT NULL,
     status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
