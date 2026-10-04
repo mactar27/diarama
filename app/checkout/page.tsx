@@ -25,7 +25,7 @@ export default function CheckoutPage() {
   const { items, subtotal, discount, total, clearCart } = useCart()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const shippingCost = 0
+  const shippingCost = 2000
   const finalTotal = total + shippingCost
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

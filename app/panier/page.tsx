@@ -244,13 +244,13 @@ export default function CartPage() {
                   )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Livraison</span>
-                    <span>{formatPrice(2500)}</span>
+                    <span>{formatPrice(2000)}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total</span>
                     <span className="text-primary">
-                      {formatPrice(total + 2500)}
+                      {formatPrice(total + 2000)}
                     </span>
                   </div>
                 </div>
